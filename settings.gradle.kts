@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "ML Invoice"
 include(":app")
- 
+include(":data")
+include(":presenter")
+include(":domain")
+include(":common")

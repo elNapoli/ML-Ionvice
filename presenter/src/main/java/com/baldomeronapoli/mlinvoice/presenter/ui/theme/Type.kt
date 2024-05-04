@@ -1,4 +1,4 @@
-package com.baldomeronapoli.mlinvoice.ui.theme
+package com.baldomeronapoli.mlinvoice.presenter.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
