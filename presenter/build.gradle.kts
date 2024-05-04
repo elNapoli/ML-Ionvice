@@ -1,6 +1,12 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
+}
+kapt {
+    correctErrorTypes = true
 }
 
 android {
@@ -61,9 +67,26 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
-    //navigation
+    // Navigation
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation)
+
+    // Dagger Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+
+    // Firebase
+    implementation (platform(libs.firebase.bom))
+    implementation(libs.google.firebase.auth)
+
+    // Logger
+    implementation(libs.timber)
+
+    // Material extra icons.
+    implementation(libs.androidx.material.icons.extended)
+    implementation(kotlin("reflect"))
+
 
 }

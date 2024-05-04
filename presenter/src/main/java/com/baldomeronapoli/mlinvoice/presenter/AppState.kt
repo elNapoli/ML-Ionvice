@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.HomeRoute
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.auth.AuthRoute
 import com.baldomeronapoli.mlinvoice.presenter.utils.currentRoute
 
 
@@ -22,7 +22,7 @@ class AppState(
     val navController: NavHostController,
 ) {
     private val bottomNavigationItems = listOf(
-        HomeRoute.Index,
+        AuthRoute.SignIn,
 
     )
 

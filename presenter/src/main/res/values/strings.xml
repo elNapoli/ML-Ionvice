@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_in_title">Iniciar sesión</string>
+    <string name="sign_in_subtitle">Ingresa tus credenciales para iniciar sesión</string>
+    <string name="email">Correo electrónico</string>
+    <string name="example_email">fake@gmail.com</string>
+    <string name="password">Contraseña</string>
+    <string name="new_user">¿Nuevo usuario?, ¡regístrate acá!</string>
+    <string name="sign_up_title">Crear sesión</string>
+    <string name="sign_up_subtitle">Crea tus credenciales para registrarte</string>
+    <string name="create_user">Iniciar sesión</string>
+</resources>
