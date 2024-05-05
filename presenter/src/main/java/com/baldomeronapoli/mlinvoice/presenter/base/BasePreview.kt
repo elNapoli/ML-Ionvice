@@ -5,7 +5,9 @@ import com.baldomeronapoli.mlinvoice.presenter.AppState
 import com.baldomeronapoli.mlinvoice.presenter.base.composables.BaseScaffold
 import com.baldomeronapoli.mlinvoice.presenter.rememberAppState
 import com.baldomeronapoli.mlinvoice.presenter.ui.theme.MLInvoiceTheme
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
+@ExperimentalPermissionsApi
 @Composable
 fun BasePreview(
     content: @Composable () -> Unit = {},

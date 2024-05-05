@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.baldomeronapoli.mlinvoice.presenter.base.BasePreview
 import com.baldomeronapoli.mlinvoice.presenter.ui.theme.success
 import com.baldomeronapoli.mlinvoice.presenter.ui.theme.successContainer
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import java.util.Locale
 
 enum class FeedbackType {
@@ -64,6 +65,7 @@ fun CardFeedback(
 
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Preview(
     showSystemUi = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO
@@ -75,6 +77,7 @@ fun PreviewCardFeedback() {
     }
 }
 
+@ExperimentalPermissionsApi
 @Preview(
     showSystemUi = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES

@@ -78,7 +78,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
 
     // Firebase
-    implementation (platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
 
     // Logger
@@ -87,6 +87,8 @@ dependencies {
     // Material extra icons.
     implementation(libs.androidx.material.icons.extended)
     implementation(kotlin("reflect"))
+
+    implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
 
 
 }

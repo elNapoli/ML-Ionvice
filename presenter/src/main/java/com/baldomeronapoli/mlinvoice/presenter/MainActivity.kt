@@ -17,6 +17,7 @@ import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
 import com.baldomeronapoli.mlinvoice.presenter.ui.MainScreen
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.core.CoreContract
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.core.CoreViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,23 +28,28 @@ sealed class Screen {
     data class Success(val startDestination: Route) : Screen()
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel: CoreViewModel by viewModels()
     private var screen: Screen by mutableStateOf(Screen.Loading)
+    private lateinit var appState: AppState
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         subscribeCommand()
-        observeState()
         setContent {
-            setContent {
-                when (val currentScreen = screen) {
-                    is Screen.Loading -> {}
-                    is Screen.Error -> {}
-                    is Screen.Success -> MainScreen(startDestination = currentScreen.startDestination)
-                }
+            appState = rememberAppState()
+            observeState(appState)
+            when (val currentScreen = screen) {
+                is Screen.Loading -> {}
+                is Screen.Error -> {}
+                is Screen.Success -> MainScreen(
+                    appState = appState,
+                    startDestination = currentScreen.startDestination
+                )
             }
         }
+
     }
 
     private fun subscribeCommand() {
@@ -56,7 +62,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun handleUserState(userState: BaseUiState<FirebaseUser?>) {
+    private fun handleUserState(appState: AppState, userState: BaseUiState<FirebaseUser?>) {
         when (userState) {
             is BaseUiState.Error -> screen = Screen.Error
 
@@ -68,6 +74,7 @@ class MainActivity : ComponentActivity() {
                 } else {
                     AuthRoute
                 }
+                appState.user.value = userState.data
                 screen = Screen.Success(startDestination)
 
             }
@@ -78,11 +85,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun observeState() {
+    private fun observeState(appState: AppState) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.viewState.collect { state ->
-                    handleUserState(state.userState)
+                    handleUserState(appState = appState, state.userState)
                 }
             }
         }
@@ -102,10 +109,13 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            is CoreContract.Command.SaveUser -> viewModel.setState {
-                copy(
-                    userState = BaseUiState.Loaded(command.user),
-                )
+            is CoreContract.Command.SaveUser -> {
+
+                viewModel.setState {
+                    copy(
+                        userState = BaseUiState.Loaded(command.user),
+                    )
+                }
             }
         }
     }
