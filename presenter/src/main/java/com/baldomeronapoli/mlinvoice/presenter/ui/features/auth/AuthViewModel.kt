@@ -1,11 +1,12 @@
 package com.baldomeronapoli.mlinvoice.presenter.ui.features.auth
 
 import androidx.lifecycle.viewModelScope
-import com.baldomeronapoli.mlinvoice.domain.usecases.auth.GetCurrentUserUseCase
 import com.baldomeronapoli.mlinvoice.domain.usecases.auth.SignInUseCase
 import com.baldomeronapoli.mlinvoice.domain.usecases.auth.SignUpWithPasswordUseCase
 import com.baldomeronapoli.mlinvoice.domain.utils.NetworkResult
 import com.baldomeronapoli.mlinvoice.presenter.base.BaseViewModel
+import com.baldomeronapoli.mlinvoice.presenter.observers.AuthObserver
+import com.baldomeronapoli.mlinvoice.presenter.observers.Observable
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.states.initAuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,6 +18,8 @@ class AuthViewModel @Inject constructor(
     private val signUpWithPasswordUseCase: SignUpWithPasswordUseCase,
 ) : BaseViewModel<AuthContract.Intent, AuthContract.State, AuthContract.Command>() {
     override fun setInitialState() = initAuthState()
+    private val observers = mutableListOf<AuthObserver>()
+
 
     override fun handleIntents(intent: AuthContract.Intent) {
         when (intent) {
@@ -67,17 +70,19 @@ class AuthViewModel @Inject constructor(
                 }
 
                 is NetworkResult.Loading -> sendCommand { AuthContract.Command.ShowSignInLoading }
-                is NetworkResult.Success -> sendCommand {
-                    AuthContract.Command.SaveUser(
-                        result.data.user!!,
-                        ""
-                    )
+                is NetworkResult.Success -> {
+
+                    sendCommand {
+                        AuthContract.Command.SaveUser(
+                            result.data.user,
+                            ""
+                        )
+                    }
                 }
 
             }
         }
     }
-
 
 
     private fun signUp(email: String, password: String) = viewModelScope.launch {
@@ -93,7 +98,7 @@ class AuthViewModel @Inject constructor(
                 is NetworkResult.Success -> {
                     sendCommand {
                         AuthContract.Command.SaveUser(
-                            result.data.user!!,
+                            null,
                             "El usuario se ha creado con exito"
                         )
                     }
@@ -105,5 +110,4 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
-
 }

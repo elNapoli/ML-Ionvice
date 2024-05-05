@@ -1,11 +1,16 @@
 package com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import com.baldomeronapoli.mlinvoice.presenter.AppState
+import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.HomeHandleCommands
+import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.HomeViewModel
+import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.screens.CameraScreen
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.screens.HomeScreen
 import com.baldomeronapoli.mlinvoice.presenter.utils.composable
+import com.baldomeronapoli.mlinvoice.presenter.utils.sharedViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 
@@ -20,9 +25,29 @@ fun NavGraphBuilder.homeGraph(
         route = HomeRoute.route
     ) {
         composable(HomeRoute.Index) {
+            val viewModel = it.sharedViewModel<HomeViewModel>(navController)
+
+            HomeHandleCommands(
+                navController = navController,
+                viewModel = viewModel
+            )
             HomeScreen(
-                appState.cameraPermissionState.status.isGranted,
-                onRequestPermission = appState.cameraPermissionState::launchPermissionRequest
+                hasPermission = appState.cameraPermissionState.status.isGranted,
+                onRequestPermission = appState.cameraPermissionState::launchPermissionRequest,
+                state = viewModel.viewState.collectAsStateWithLifecycle(),
+                onIntent = viewModel::setIntent,
+            )
+        }
+        composable(HomeRoute.Camera) {
+            val viewModel = it.sharedViewModel<HomeViewModel>(navController)
+
+            HomeHandleCommands(
+                navController = navController,
+                viewModel = viewModel
+            )
+            CameraScreen(
+                state = viewModel.viewState.collectAsStateWithLifecycle(),
+                onIntent = viewModel::setIntent,
             )
         }
     }

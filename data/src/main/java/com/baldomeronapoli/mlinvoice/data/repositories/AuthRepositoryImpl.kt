@@ -23,7 +23,9 @@ class AuthRepositoryImpl @Inject constructor(
         email: String,
         password: String
     ): Flow<NetworkResult<AuthResult>> = toSecureFlow {
-        firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+        val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+        FirebaseAuth.getInstance().signOut()
+        result
     }
 
     override suspend fun signInWithGoogle(credential: AuthCredential): Flow<NetworkResult<AuthResult>> =

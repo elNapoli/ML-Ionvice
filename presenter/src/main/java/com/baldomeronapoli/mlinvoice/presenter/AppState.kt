@@ -40,7 +40,7 @@ class AppState(
     var coroutineScope: CoroutineScope,
     val cameraPermissionState: PermissionState
 ) {
-    val user = mutableStateOf<FirebaseUser?>(null)
+    var user = mutableStateOf<FirebaseUser?>(null)
     val itemsDrawer = listOf(HomeRoute.Index)
     private fun openDrawer() {
         coroutineScope.launch {

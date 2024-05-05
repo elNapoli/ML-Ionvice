@@ -10,7 +10,7 @@ import com.baldomeronapoli.mlinvoice.presenter.utils.ValidateState
 import com.baldomeronapoli.mlinvoice.presenter.utils.collectWithLifecycle
 
 @Composable
-fun HomeHandleCommands(
+fun AuthHandleCommands(
     navController: NavHostController,
     viewModel: AuthViewModel
 ) {

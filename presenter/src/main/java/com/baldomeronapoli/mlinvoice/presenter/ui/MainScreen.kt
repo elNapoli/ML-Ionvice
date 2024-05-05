@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.baldomeronapoli.mlinvoice.presenter.AppState
 import com.baldomeronapoli.mlinvoice.presenter.R
 import com.baldomeronapoli.mlinvoice.presenter.base.composables.BaseScaffold
@@ -62,7 +63,14 @@ fun MainScreen(appState: AppState, startDestination: Route) {
                                 }
                             },
                             selected = currentRoute(appState.navController) == it.route,
-                            onClick = { /*TODO*/ }
+                            onClick = {
+                                appState.navController.navigate(it.route) {
+                                    popUpTo(appState.navController.graph.findStartDestination().id) {
+                                    }
+                                    launchSingleTop = true
+                                }
+                                appState.toggleDrawer()
+                            }
                         )
                     }
 

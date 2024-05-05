@@ -1,5 +1,6 @@
 package com.baldomeronapoli.mlinvoice.presenter.ui.features.home.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,17 +19,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.baldomeronapoli.mlinvoice.presenter.R
+import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.HomeContract
 
 @Composable
-fun HomeScreen(hasPermission: Boolean, onRequestPermission: () -> Unit) {
+fun HomeScreen(
+    hasPermission: Boolean,
+    onRequestPermission: () -> Unit,
+    state: State<HomeContract.State>,
+    onIntent: (event: HomeContract.Intent) -> Unit,
+) {
     if (hasPermission) {
-        HomeContent()
+        HomeContent(onIntent)
     } else {
         NoPermissionScreen(onRequestPermission)
     }
@@ -61,7 +69,7 @@ fun NoPermissionScreen(onRequestPermission: () -> Unit) {
 }
 
 @Composable
-fun HomeContent() {
+fun HomeContent(onIntent: (event: HomeContract.Intent) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -90,7 +98,9 @@ fun HomeContent() {
 
         }
         Card(
-            modifier = Modifier.size(200.dp),
+            modifier = Modifier
+                .size(200.dp)
+                .clickable { onIntent(HomeContract.Intent.GoToCameraScreen) },
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.secondary,
             ),

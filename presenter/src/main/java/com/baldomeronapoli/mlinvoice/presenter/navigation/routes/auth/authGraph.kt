@@ -6,8 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.HomeRoute
+import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthHandleCommands
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthViewModel
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.HomeHandleCommands
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.screens.SignInScreen
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.screens.SignUpScreen
 import com.baldomeronapoli.mlinvoice.presenter.utils.composable
@@ -24,7 +24,7 @@ fun NavGraphBuilder.authGraph(
         composable(AuthRoute.SignIn) {
             val viewModel = it.sharedViewModel<AuthViewModel>(navController)
             val state = viewModel.viewState.collectAsStateWithLifecycle()
-            HomeHandleCommands(
+            AuthHandleCommands(
                 navController = navController,
                 viewModel = viewModel
             )
@@ -47,7 +47,7 @@ fun NavGraphBuilder.authGraph(
         composable(AuthRoute.SignUp) {
             val viewModel = it.sharedViewModel<AuthViewModel>(navController)
 
-            HomeHandleCommands(
+            AuthHandleCommands(
                 navController = navController,
                 viewModel = viewModel
             )

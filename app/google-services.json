@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "302609155259",
-    "project_id": "ml-invoice",
-    "storage_bucket": "ml-invoice.appspot.com"
+    "project_number": "1030954436084",
+    "project_id": "ml-invoice-c65a6",
+    "storage_bucket": "ml-invoice-c65a6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:302609155259:android:0a7a29dbf498a290c7959e",
+        "mobilesdk_app_id": "1:1030954436084:android:20376abf175fbf19a0e5a1",
         "android_client_info": {
           "package_name": "com.baldomeronapoli.mlinvoice"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "302609155259-361qpo1mq0dc8t2odm6jkjmo7r9llap6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBrsnoAp6EkWdlxyRlXa6xtV8NOxEmOvFY"
+          "current_key": "AIzaSyDWAX_s6Es3riv5moIzaGzDxxRh2A7pw8I"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "302609155259-361qpo1mq0dc8t2odm6jkjmo7r9llap6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

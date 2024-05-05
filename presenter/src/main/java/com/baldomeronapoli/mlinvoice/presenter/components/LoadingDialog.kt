@@ -35,13 +35,14 @@ fun LoadingDialog(
                 modifier = Modifier
                     .size(76.dp)
             ) {
-                CircularProgressIndicator(
+                // TODO: da problemas esto no se por que
+               /* CircularProgressIndicator(
                     modifier = Modifier
                         .align(
                             Alignment.Center
                         ),
                     color = MaterialTheme.colorScheme.primary
-                )
+                )*/
             }
         }
     }

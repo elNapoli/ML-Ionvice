@@ -2,8 +2,12 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.gms.google-services")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
-
+kapt {
+    correctErrorTypes = true
+}
 android {
     namespace = "com.baldomeronapoli.mlinvoice.domain"
     compileSdk = 34
@@ -46,4 +50,8 @@ dependencies {
     // Firebase
     implementation (platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
+
+    // Dagger Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
 }

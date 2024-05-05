@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import timber.log.Timber
 
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
