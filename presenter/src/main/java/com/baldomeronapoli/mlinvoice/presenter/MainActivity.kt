@@ -3,24 +3,109 @@ package com.baldomeronapoli.mlinvoice.presenter
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.activity.viewModels
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.Route
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.auth.AuthRoute
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.HomeRoute
+import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
 import com.baldomeronapoli.mlinvoice.presenter.ui.MainScreen
-import com.baldomeronapoli.mlinvoice.presenter.ui.theme.MLInvoiceTheme
+import com.baldomeronapoli.mlinvoice.presenter.ui.features.core.CoreContract
+import com.baldomeronapoli.mlinvoice.presenter.ui.features.core.CoreViewModel
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
+sealed class Screen {
+    object Loading : Screen()
+    object Error : Screen()
+    data class Success(val startDestination: Route) : Screen()
+}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel: CoreViewModel by viewModels()
+    private var screen: Screen by mutableStateOf(Screen.Loading)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        subscribeCommand()
+        observeState()
         setContent {
             setContent {
-                MainScreen()
+                when (val currentScreen = screen) {
+                    is Screen.Loading -> {}
+                    is Screen.Error -> {}
+                    is Screen.Success -> MainScreen(startDestination = currentScreen.startDestination)
+                }
+            }
+        }
+    }
+
+    private fun subscribeCommand() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.command.collect { command ->
+                    handleCommand(command)
+                }
+            }
+        }
+    }
+
+    private fun handleUserState(userState: BaseUiState<FirebaseUser?>) {
+        when (userState) {
+            is BaseUiState.Error -> screen = Screen.Error
+
+            is BaseUiState.Loading -> screen = Screen.Loading
+
+            is BaseUiState.Loaded -> {
+                val startDestination = if (userState.data != null) {
+                    HomeRoute
+                } else {
+                    AuthRoute
+                }
+                screen = Screen.Success(startDestination)
+
+            }
+
+            is BaseUiState.NotStarted -> {
+
+            }
+        }
+    }
+
+    private fun observeState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewState.collect { state ->
+                    handleUserState(state.userState)
+                }
+            }
+        }
+    }
+
+    private fun handleCommand(command: CoreContract.Command) {
+        when (command) {
+            is CoreContract.Command.SetErrorSignIn -> viewModel.setState {
+                copy(
+                    userState = BaseUiState.Error(command.message),
+                )
+            }
+
+            is CoreContract.Command.ShowSignInLoading -> viewModel.setState {
+                copy(
+                    userState = BaseUiState.Loading(true),
+                )
+            }
+
+            is CoreContract.Command.SaveUser -> viewModel.setState {
+                copy(
+                    userState = BaseUiState.Loaded(command.user),
+                )
             }
         }
     }

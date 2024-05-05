@@ -1,6 +1,7 @@
 package com.baldomeronapoli.mlinvoice.presenter.ui.features.auth
 
 import androidx.lifecycle.viewModelScope
+import com.baldomeronapoli.mlinvoice.domain.usecases.auth.GetCurrentUserUseCase
 import com.baldomeronapoli.mlinvoice.domain.usecases.auth.SignInUseCase
 import com.baldomeronapoli.mlinvoice.domain.usecases.auth.SignUpWithPasswordUseCase
 import com.baldomeronapoli.mlinvoice.domain.utils.NetworkResult
@@ -15,7 +16,6 @@ class AuthViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val signUpWithPasswordUseCase: SignUpWithPasswordUseCase,
 ) : BaseViewModel<AuthContract.Intent, AuthContract.State, AuthContract.Command>() {
-
     override fun setInitialState() = initAuthState()
 
     override fun handleIntents(intent: AuthContract.Intent) {
@@ -77,6 +77,8 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+
+
 
     private fun signUp(email: String, password: String) = viewModelScope.launch {
         signUpWithPasswordUseCase(email, password).collect { result ->

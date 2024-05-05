@@ -4,19 +4,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.auth.AuthRoute
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.Route
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.auth.authGraph
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.homeGraph
 
 
 @Composable
 fun AppNavigationHost(
-    navController: NavHostController,
     modifier: Modifier = Modifier,
+    navController: NavHostController,
+    startDestination: Route
 ) {
     NavHost(
         modifier = modifier,
-        navController = navController, startDestination = AuthRoute.route
+        navController = navController, startDestination = startDestination.route
     ) {
         authGraph(navController)
+        homeGraph(navController)
     }
 }

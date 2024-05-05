@@ -20,7 +20,7 @@ class AuthContract {
     }
 
     data class State(
-        val userState: BaseUiState<FirebaseUser>,
+        val userState: BaseUiState<FirebaseUser?>,
         val credential: Credential,
     ) : ViewState
 
@@ -28,7 +28,7 @@ class AuthContract {
         data class SetErrorSignIn(val message: String) : Command()
         data object CleanInitialState : Command()
         data object ShowSignInLoading : Command()
-        data class SaveUser(val user: FirebaseUser, val message: String) : Command()
+        data class SaveUser(val user: FirebaseUser?, val message: String) : Command()
         data class UpdatePassword(val password: String) : Command()
         data class UpdateEmail(val email: String) : Command()
         data object UpdatePasswordVisibility : Command()

@@ -1,10 +1,11 @@
 package com.baldomeronapoli.mlinvoice.presenter.navigation.routes.auth
 
-import androidx.compose.material3.Text
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.HomeRoute
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthViewModel
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.HomeHandleCommands
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.screens.SignInScreen
@@ -22,15 +23,26 @@ fun NavGraphBuilder.authGraph(
     ) {
         composable(AuthRoute.SignIn) {
             val viewModel = it.sharedViewModel<AuthViewModel>(navController)
-
+            val state = viewModel.viewState.collectAsStateWithLifecycle()
             HomeHandleCommands(
                 navController = navController,
                 viewModel = viewModel
             )
-            SignInScreen(
-                state = viewModel.viewState.collectAsStateWithLifecycle(),
-                onIntent = viewModel::setIntent,
-            )
+            // TODO: analizar donde debe ir esta logica
+            if (state.value.userState.data !== null) {
+                navController.navigate(HomeRoute.Index.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            } else {
+                SignInScreen(
+                    state = state,
+                    onIntent = viewModel::setIntent,
+                )
+            }
+
         }
         composable(AuthRoute.SignUp) {
             val viewModel = it.sharedViewModel<AuthViewModel>(navController)
