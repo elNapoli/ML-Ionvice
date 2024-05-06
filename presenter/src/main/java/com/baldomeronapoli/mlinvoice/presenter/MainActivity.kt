@@ -16,7 +16,7 @@ import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.HomeRoute
 import com.baldomeronapoli.mlinvoice.presenter.observers.AuthObserver
 import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
 import com.baldomeronapoli.mlinvoice.presenter.ui.MainScreen
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthViewModel
+import com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth.AuthViewModel
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.core.CoreContract
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.core.CoreViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -30,11 +30,9 @@ sealed class Screen {
     data class Success(val startDestination: Route) : Screen()
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), AuthObserver {
     private val viewModel: CoreViewModel by viewModels()
-    private val authViewModel: AuthViewModel by viewModels()
     private var screen: Screen by mutableStateOf(Screen.Loading)
     private lateinit var appState: AppState
     override fun onCreate(savedInstanceState: Bundle?) {

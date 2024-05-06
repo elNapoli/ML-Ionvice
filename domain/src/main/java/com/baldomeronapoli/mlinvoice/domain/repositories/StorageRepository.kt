@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface StorageRepository {
     suspend fun uploadFile(fileName: String, filePath: Uri): Flow<NetworkResult<String?>>
-    suspend fun getUserImages(): Flow<NetworkResult<List<String>>>
+    suspend fun getUserFiles(): Flow<NetworkResult<List<String>>>
 }

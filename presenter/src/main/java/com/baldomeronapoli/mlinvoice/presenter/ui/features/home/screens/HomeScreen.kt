@@ -36,13 +36,14 @@ import coil.compose.AsyncImage
 import com.baldomeronapoli.mlinvoice.presenter.R
 import com.baldomeronapoli.mlinvoice.presenter.components.LoadingDialog
 import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.HomeContract
+import com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.storage.StorageContract
+import com.baldomeronapoli.mlinvoice.presenter.utils.createImageFile
 import java.util.Objects
 
 @Composable
 fun HomeScreen(
-    state: State<HomeContract.State>,
-    onIntent: (event: HomeContract.Intent) -> Unit,
+    state: State<StorageContract.State>,
+    onIntent: (event: StorageContract.Intent) -> Unit,
 ) {
 
     HomeContent(state = state, onIntent = onIntent)
@@ -53,8 +54,8 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    state: State<HomeContract.State>,
-    onIntent: (event: HomeContract.Intent) -> Unit
+    state: State<StorageContract.State>,
+    onIntent: (event: StorageContract.Intent) -> Unit
 ) {
     val context = LocalContext.current
     val file = context.createImageFile()
@@ -65,7 +66,7 @@ fun HomeContent(
 
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) {
         if (it) {
-            onIntent(HomeContract.Intent.CapturePhoto(file.name, uri))
+            onIntent(StorageContract.Intent.CapturePhoto(file.name, uri))
         }
     }
 
@@ -79,7 +80,16 @@ fun HomeContent(
 
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> uri?.let { onIntent(HomeContract.Intent.PickedPhoto(file.name, it)) } }
+        onResult = { uri ->
+            uri?.let {
+                onIntent(
+                    StorageContract.Intent.PickedPhoto(
+                        file.name,
+                        it
+                    )
+                )
+            }
+        }
     )
     Column(
         modifier = Modifier.fillMaxSize()

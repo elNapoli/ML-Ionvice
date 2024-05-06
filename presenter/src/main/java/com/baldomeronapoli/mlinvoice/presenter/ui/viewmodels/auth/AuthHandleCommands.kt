@@ -1,11 +1,11 @@
-package com.baldomeronapoli.mlinvoice.presenter.ui.features.auth
+package com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.auth.AuthRoute
 import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.states.Credential
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.states.initAuthState
+import com.baldomeronapoli.mlinvoice.presenter.ui.states.Credential
+import com.baldomeronapoli.mlinvoice.presenter.ui.states.initAuthState
 import com.baldomeronapoli.mlinvoice.presenter.utils.ValidateState
 import com.baldomeronapoli.mlinvoice.presenter.utils.collectWithLifecycle
 

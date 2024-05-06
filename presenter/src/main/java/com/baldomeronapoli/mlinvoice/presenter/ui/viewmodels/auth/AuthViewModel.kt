@@ -1,4 +1,4 @@
-package com.baldomeronapoli.mlinvoice.presenter.ui.features.auth
+package com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth
 
 import androidx.lifecycle.viewModelScope
 import com.baldomeronapoli.mlinvoice.domain.usecases.auth.SignInUseCase
@@ -6,8 +6,7 @@ import com.baldomeronapoli.mlinvoice.domain.usecases.auth.SignUpWithPasswordUseC
 import com.baldomeronapoli.mlinvoice.domain.utils.NetworkResult
 import com.baldomeronapoli.mlinvoice.presenter.base.BaseViewModel
 import com.baldomeronapoli.mlinvoice.presenter.observers.AuthObserver
-import com.baldomeronapoli.mlinvoice.presenter.observers.Observable
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.states.initAuthState
+import com.baldomeronapoli.mlinvoice.presenter.ui.states.initAuthState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,10 +1,10 @@
-package com.baldomeronapoli.mlinvoice.presenter.ui.features.auth
+package com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth
 
 import com.baldomeronapoli.mlinvoice.presenter.base.ViewCommand
 import com.baldomeronapoli.mlinvoice.presenter.base.ViewIntent
 import com.baldomeronapoli.mlinvoice.presenter.base.ViewState
 import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.states.Credential
+import com.baldomeronapoli.mlinvoice.presenter.ui.states.Credential
 import com.google.firebase.auth.FirebaseUser
 
 class AuthContract {

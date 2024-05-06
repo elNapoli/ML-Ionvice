@@ -1,7 +1,7 @@
-package com.baldomeronapoli.mlinvoice.presenter.ui.features.states
+package com.baldomeronapoli.mlinvoice.presenter.ui.states
 
 import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthContract
+import com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth.AuthContract
 
 
 fun initAuthState() = AuthContract.State(

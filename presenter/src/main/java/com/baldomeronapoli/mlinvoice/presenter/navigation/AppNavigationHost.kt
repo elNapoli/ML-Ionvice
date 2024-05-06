@@ -7,6 +7,7 @@ import com.baldomeronapoli.mlinvoice.presenter.AppState
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.Route
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.auth.authGraph
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.homeGraph
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.storage.storageGraph
 
 
 @Composable
@@ -21,6 +22,13 @@ fun AppNavigationHost(
         navController = navController, startDestination = startDestination.route
     ) {
         authGraph(navController)
-        homeGraph(navController, appState)
+        homeGraph(
+            navController,
+            appState
+        )
+        storageGraph(
+            navController,
+            appState
+        )
     }
 }

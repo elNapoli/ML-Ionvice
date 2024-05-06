@@ -33,7 +33,7 @@ import com.baldomeronapoli.mlinvoice.presenter.components.CardFeedback
 import com.baldomeronapoli.mlinvoice.presenter.components.FeedbackType
 import com.baldomeronapoli.mlinvoice.presenter.components.LoadingDialog
 import com.baldomeronapoli.mlinvoice.presenter.state.BaseUiState
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthContract
+import com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth.AuthContract
 import com.baldomeronapoli.mlinvoice.presenter.utils.AnimateVisibility
 import timber.log.Timber
 

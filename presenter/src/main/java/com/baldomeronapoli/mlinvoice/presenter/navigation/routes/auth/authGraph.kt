@@ -6,8 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.HomeRoute
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthHandleCommands
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.AuthViewModel
+import com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth.AuthHandleCommands
+import com.baldomeronapoli.mlinvoice.presenter.ui.viewmodels.auth.AuthViewModel
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.screens.SignInScreen
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.auth.screens.SignUpScreen
 import com.baldomeronapoli.mlinvoice.presenter.utils.composable

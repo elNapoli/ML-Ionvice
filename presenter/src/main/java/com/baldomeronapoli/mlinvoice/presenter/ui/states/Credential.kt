@@ -1,4 +1,4 @@
-package com.baldomeronapoli.mlinvoice.presenter.ui.features.states
+package com.baldomeronapoli.mlinvoice.presenter.ui.states
 
 import com.baldomeronapoli.mlinvoice.presenter.utils.EmailValidation
 import com.baldomeronapoli.mlinvoice.presenter.utils.ValidationError

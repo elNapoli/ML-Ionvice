@@ -10,6 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.home.HomeRoute
+import com.baldomeronapoli.mlinvoice.presenter.navigation.routes.storage.StorageRoute
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ class AppState(
     var coroutineScope: CoroutineScope,
 ) {
     var user = mutableStateOf<FirebaseUser?>(null)
-    val itemsDrawer = listOf(HomeRoute.Index)
+    val itemsDrawer = listOf(HomeRoute.Index, StorageRoute.Index)
     private fun openDrawer() {
         coroutineScope.launch {
             drawerState.open()

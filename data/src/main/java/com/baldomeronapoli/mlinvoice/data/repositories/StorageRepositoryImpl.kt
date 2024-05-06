@@ -18,7 +18,7 @@ class StorageRepositoryImpl @Inject constructor(
         cloudStorageManager.uploadFile(fileName, filePath)
     }
 
-    override suspend fun getUserImages(): Flow<NetworkResult<List<String>>> = toSecureFlow {
+    override suspend fun getUserFiles(): Flow<NetworkResult<List<String>>> = toSecureFlow {
         cloudStorageManager.getUserImages()
     }
 }
