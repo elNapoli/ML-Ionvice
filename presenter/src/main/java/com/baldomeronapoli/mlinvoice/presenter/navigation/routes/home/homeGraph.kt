@@ -7,7 +7,6 @@ import androidx.navigation.navigation
 import com.baldomeronapoli.mlinvoice.presenter.AppState
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.HomeHandleCommands
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.HomeViewModel
-import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.screens.CameraScreen
 import com.baldomeronapoli.mlinvoice.presenter.ui.features.home.screens.HomeScreen
 import com.baldomeronapoli.mlinvoice.presenter.utils.composable
 import com.baldomeronapoli.mlinvoice.presenter.utils.sharedViewModel
@@ -32,8 +31,6 @@ fun NavGraphBuilder.homeGraph(
                 viewModel = viewModel
             )
             HomeScreen(
-                hasPermission = appState.cameraPermissionState.status.isGranted,
-                onRequestPermission = appState.cameraPermissionState::launchPermissionRequest,
                 state = viewModel.viewState.collectAsStateWithLifecycle(),
                 onIntent = viewModel::setIntent,
             )
@@ -45,10 +42,7 @@ fun NavGraphBuilder.homeGraph(
                 navController = navController,
                 viewModel = viewModel
             )
-            CameraScreen(
-                state = viewModel.viewState.collectAsStateWithLifecycle(),
-                onIntent = viewModel::setIntent,
-            )
+
         }
     }
 }

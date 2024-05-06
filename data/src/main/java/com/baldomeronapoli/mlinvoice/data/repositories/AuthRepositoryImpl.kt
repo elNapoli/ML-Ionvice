@@ -1,5 +1,6 @@
 package com.baldomeronapoli.mlinvoice.data.repositories
 
+import com.baldomeronapoli.mlinvoice.data.services.AuthManager
 import com.baldomeronapoli.mlinvoice.data.utils.toSecureFlow
 import com.baldomeronapoli.mlinvoice.domain.repositories.AuthRepository
 import com.baldomeronapoli.mlinvoice.domain.utils.NetworkResult
@@ -12,7 +13,8 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val authManager: AuthManager
 ) : AuthRepository {
     override suspend fun signIn(email: String, password: String): Flow<NetworkResult<AuthResult>> =
         toSecureFlow {
@@ -35,7 +37,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentUser(): Flow<NetworkResult<FirebaseUser?>> =
         toSecureFlow {
-            firebaseAuth.currentUser
+            authManager.getCurrentUser()
         }
 
 

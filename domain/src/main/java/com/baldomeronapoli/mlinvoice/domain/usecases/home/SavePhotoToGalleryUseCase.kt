@@ -8,20 +8,24 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import com.baldomeronapoli.mlinvoice.domain.utils.NetworkResult
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.io.OutputStream
 import javax.inject.Inject
+
 
 class SavePhotoToGalleryUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {
-    suspend operator fun invoke(capturePhotoBitmap: Bitmap): Result<Unit> =
-        withContext(Dispatchers.IO) {
+    suspend operator fun invoke(
+        capturePhotoBitmap: Bitmap
+    ): Flow<NetworkResult<Uri?>> = flow {
+        emit(NetworkResult.Loading(true))
 
+        try {
             val resolver: ContentResolver = context.applicationContext.contentResolver
-
             val imageCollection: Uri = when {
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> MediaStore.Images.Media.getContentUri(
                     MediaStore.VOLUME_EXTERNAL_PRIMARY
@@ -30,7 +34,6 @@ class SavePhotoToGalleryUseCase @Inject constructor(
                 else -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             }
 
-            // Publish a new image.
             val nowTimestamp: Long = System.currentTimeMillis()
             val imageContentValues: ContentValues = ContentValues().apply {
 
@@ -57,8 +60,7 @@ class SavePhotoToGalleryUseCase @Inject constructor(
 
             val imageMediaStoreUri: Uri? = resolver.insert(imageCollection, imageContentValues)
 
-            // Write the image data to the new Uri.
-            val result: Result<Unit> = imageMediaStoreUri?.let { uri ->
+            val result: NetworkResult<Uri?> = imageMediaStoreUri?.let { uri ->
                 kotlin.runCatching {
                     resolver.openOutputStream(uri).use { outputStream: OutputStream? ->
                         checkNotNull(outputStream) { "Couldn't create file for gallery, MediaStore output stream is null" }
@@ -70,18 +72,18 @@ class SavePhotoToGalleryUseCase @Inject constructor(
                         imageContentValues.put(MediaStore.MediaColumns.IS_PENDING, 0)
                         resolver.update(uri, imageContentValues, null, null)
                     }
-
-                    Result.success(Unit)
+                    NetworkResult.Success(imageMediaStoreUri)
                 }.getOrElse { exception: Throwable ->
-                    exception.message?.let(::println)
                     resolver.delete(uri, null, null)
-                    Result.failure(exception)
+                    NetworkResult.Error(exception = exception.message!!)
                 }
             } ?: run {
-                Result.failure(Exception("Couldn't create file for gallery"))
+                NetworkResult.Error(exception = "Couldn't create file for gallery")
             }
-
-            return@withContext result
+            emit(result)
+        } catch (e: Exception) {
+            emit(NetworkResult.Error(exception = e.message!!))
         }
+    }
 
 }

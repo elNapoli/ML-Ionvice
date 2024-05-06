@@ -49,9 +49,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //firebase
-    implementation (platform(libs.firebase.bom))
+    // Firebase
+    implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
+    implementation(libs.google.firebase.storage)
 
     // Dagger Hilt
     implementation(libs.hilt.android)

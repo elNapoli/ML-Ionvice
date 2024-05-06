@@ -80,6 +80,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.auth)
+    implementation(libs.google.firebase.storage)
 
     // Logger
     implementation(libs.timber)
@@ -88,16 +89,8 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(kotlin("reflect"))
 
-    implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
+    implementation(libs.accompanist.permissions)
 
-    // CAMERA
-
-    //// CAMERA STUFF ////
-    implementation ("androidx.camera:camera-camera2:1.3.1")
-    implementation ("androidx.camera:camera-lifecycle:1.3.1")
-    implementation ("androidx.camera:camera-view:1.3.1")
-    implementation ("androidx.camera:camera-extensions:1.3.1")
-
-
+    implementation(libs.coil.compose)
 
 }
